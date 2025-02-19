@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Junior's Cheesecakes</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #FBF6EA;">
+    <center>
+        <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 700px; background: #FBF6EA;">
+            <!-- Header -->
+            <tr>
+                <td>
+                    <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/HEADER_MASTER_NO_LINKS_-_DESKTOP.png?v=1739783238" 
+                         alt="Header" width="100%" style="display: block;">
+                </td>
+            </tr>
+
+            <!-- Order Number and Confirmation -->
+            <tr>
+                <td align="center" style="padding-top: 40px;">
+                    <h2 style="font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #000000;">
+                        Order: <span style="text-decoration: underline; color: #D93400;">{{ order.order_number }}</span>
+                    </h2>
+                    <h1 style="font-family: 'OC Highway VAR2', Arial, sans-serif; font-size: 22px; font-weight: 400; line-height: 20.9px; letter-spacing: 2%; margin-bottom: 10px;">
+                        ORDER CONFIRMED!
+                    </h1>
+                </td>
+            </tr>
+
+            <!-- Progress Bar -->
+            <tr>
+                <td style="padding: 40px 20px;">
+                    <table cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; margin: 0 auto;">
+                        <tr>
+                            <td style="position: relative;">
+                                <!-- Progress Line -->
+                                <div style="position: absolute; top: 17px; left: 50px; right: 50px; height: 2px; background: #000000; z-index: 1;"></div>
+                                
+                                <!-- Progress Points -->
+                                <table cellpadding="0" cellspacing="0" width="100%" style="position: relative; z-index: 2;">
+                                    <tr>
+                                        <td width="25%" align="center">
+                                            <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; border: 2px solid #000000; margin: 0 auto; position: relative;">
+                                                <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Juniors_Box.png?v=1739783238" 
+                                                     alt="Active" style="position: absolute; width: 74px; height: 58px; top: -15px; left: -20px;">
+                </div>
+                                            <p style="font-family: Arial, sans-serif; font-size: 16px; color: #121211; margin-top: 20px;">Order<br>Placed</p>
+                                        </td>
+                                        <td width="25%" align="center">
+                                            <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; border: 2px solid #000000; margin: 0 auto;"></div>
+                                            <p style="font-family: Arial, sans-serif; font-size: 16px; color: #121211; margin-top: 20px;">Shipped</p>
+                                        </td>
+                                        <td width="25%" align="center">
+                                            <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; border: 2px solid #000000; margin: 0 auto;"></div>
+                                            <p style="font-family: Arial, sans-serif; font-size: 16px; color: #121211; margin-top: 20px;">Out For<br>Delivery</p>
+                                        </td>
+                                        <td width="25%" align="center">
+                                            <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; border: 2px solid #000000; margin: 0 auto;"></div>
+                                            <p style="font-family: Arial, sans-serif; font-size: 16px; color: #121211; margin-top: 20px;">Delivered</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Order Details -->
+            <tr>
+                <td style="padding: 20px;">
+                    <h2 style="font-family: Arial; font-weight: 700; font-size: 14px; line-height: 16.8px; letter-spacing: 4%; color: #D93400; margin-bottom: 20px;">
+                        ORDER SUMMARY
+                    </h2>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border: 1px solid #C1C2BC; border-radius: 8px; background: #FFFFFF;">
+                {% for line_item in order.line_items %}
+                        <tr>
+                            <td style="padding: 20px; border-bottom: 1px solid #E0E0E0;">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="80">
+                                            <img src="{{ line_item.product.featured_image | img_url: 'medium' }}" 
+                                                 alt="{{ line_item.title }}" 
+                                                 style="width: 80px; height: 80px; object-fit: cover;">
+                                        </td>
+                                        <td style="padding-left: 15px; max-width: 280px;">
+                                            <h3 style="font-family: Helvetica; font-weight: 700; font-size: 24px; line-height: 24px; color: #121211; margin: 5px 0;">
+                                                {{ line_item.title | upcase }}
+                                            </h3>
+                                            <p style="margin: 2px 0;">SKU# {{ line_item.sku }}</p>
+                                            <p style="margin: 2px 0;">QTY: {{ line_item.quantity }}</p>
+                                        </td>
+                                        <td align="right">
+                                            {{ line_item.price | money }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                {% endfor %}
+
+                {% if order.note %}
+                        <tr>
+                            <td style="padding: 15px;">
+                                <div style="background: #fff; padding: 15px; border-radius: 8px;">
+                                    <h3 style="color: #D93400; margin: 0 0 10px 0;">GIFT MESSAGE</h3>
+                    <span>{{ order.note }}</span>
+                </div>
+                            </td>
+                        </tr>
+                {% endif %}
+
+                        <!-- Order Total -->
+                        <tr>
+                            <td style="padding: 20px; background: #FFFFFF;">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td>Subtotal</td>
+                                        <td align="right">{{ order.subtotal_price | money }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping</td>
+                                        <td align="right">{{ order.shipping_price | money }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 24px;">
+                                            <h6 style="font-family: Arial; font-weight: 700; margin: 0;">TOTAL:</h6>
+                                        </td>
+                                        <td align="right" style="padding-top: 24px;">
+                                            <h6 style="font-family: Arial; font-weight: 700; margin: 0;">{{ order.total_price | money }}</h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Delivery Information -->
+            <tr>
+                <td style="padding: 20px;">
+                    <h2 style="font-family: Arial; font-weight: 700; font-size: 14px; line-height: 16.8px; letter-spacing: 4%; color: #D93400; margin-bottom: 20px;">
+                        DELIVERY INFORMATION
+                    </h2>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="border: 1px solid #C1C2BC; border-radius: 8px; background: #FFFFFF;">
+                        <tr>
+                            <td style="padding: 36px;">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td style="padding-bottom: 24px;">
+                                            <h3 style="font-family: Arial; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #D93400;">ORDER DATE</h3>
+                                            <p style="margin: 0; font-family: Arial; font-size: 14px;">{{ order.created_at | date: "%B %d, %Y %I:%M:%S %p %Z" }}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom: 24px;">
+                                            <h3 style="font-family: Arial; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #D93400;">DELIVERY DATE</h3>
+                                            <p style="margin: 0; font-family: Arial; font-size: 14px;">{{ order.delivery_date | date: "%b. %d" }}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                <tr>
+                                                    <td width="50%" style="padding-right: 15px;">
+                                                        <h3 style="font-family: Arial; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #D93400;">SHIPPING ADDRESS</h3>
+                                                        <p style="margin: 0; font-family: Arial; font-size: 14px; line-height: 1.4;">
+                                                            {{ order.shipping_address.name }}<br>
+                    {{ order.shipping_address.address1 }}<br>
+                    {{ order.shipping_address.city }}, {{ order.shipping_address.province_code }}<br>
+                                                            {{ order.shipping_address.zip }}<br>
+                                                            P: {{ order.shipping_address.phone }}
+                                                        </p>
+                                                    </td>
+                                                    <td width="50%" style="padding-left: 15px;">
+                                                        <h3 style="font-family: Arial; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #D93400;">BILLING ADDRESS</h3>
+                                                        <p style="margin: 0; font-family: Arial; font-size: 14px; line-height: 1.4;">
+                                                            {{ order.billing_address.name }}<br>
+                    {{ order.billing_address.address1 }}<br>
+                    {{ order.billing_address.city }}, {{ order.billing_address.province_code }}<br>
+                                                            {{ order.billing_address.zip }}<br>
+                                                            P: {{ order.billing_address.phone }}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 24px;">
+                                            <h3 style="font-family: Arial; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #D93400;">PAYMENT METHOD</h3>
+                                            <table cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td>
+                                                        <img src="{{ order.payment_details.credit_card_company | downcase }}-icon.png" 
+                                                             alt="{{ order.payment_details.credit_card_company }}" 
+                                                             style="width: 32px; height: 20px; margin-right: 8px;">
+                                                    </td>
+                                                    <td>
+                                                        <p style="margin: 0; font-family: Arial; font-size: 14px;">
+                                                            {{ order.payment_details.credit_card_company }} XXXX-{{ order.payment_details.credit_card_last4 }}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Customer Support -->
+            <tr>
+                <td style="padding: 20px;">
+                    <h2 style="font-family: Arial; font-weight: 700; font-size: 14px; line-height: 16.8px; letter-spacing: 4%; color: #D93400; margin-bottom: 20px;">
+                        CUSTOMER SUPPORT
+                    </h2>
+                    <table cellpadding="0" cellspacing="0" width="100%" style="background: #FFFFFF; border-radius: 8px;">
+                        <tr>
+                            <td style="padding: 20px;">
+                                <table cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="33%" align="center">
+                                            <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/phone.png?v=1739783239" 
+                                                 alt="Phone" style="width: 24px; height: 24px; margin-right: 10px;">
+                                            <a href="tel:718-852-5257" style="color: #D93400; text-decoration: underline; font-family: Arial; font-size: 14px;">718-852-5257</a>
+                                        </td>
+                                        <td width="33%" align="center">
+                                            <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/envelope.png?v=1739783242" 
+                                                 alt="Email" style="width: 24px; height: 24px; margin-right: 10px;">
+                                            <a href="mailto:support@juniors.com" style="color: #D93400; text-decoration: underline; font-family: Arial; font-size: 14px;">Send an Email</a>
+                                        </td>
+                                        <td width="33%" align="center">
+                                            <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/message-square-check.png?v=1739783238" 
+                                                 alt="FAQ" style="width: 24px; height: 24px; margin-right: 10px;">
+                                            <a href="/faq" style="color: #D93400; text-decoration: underline; font-family: Arial; font-size: 14px;">See our FAQs</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+                <td style="padding: 40px 0px; text-align: center;">
+                    <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Stripes.png?v=1739825324" 
+                         alt="Stripes" width="100%" style="display: block;">
+                    <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Baker.png?v=1739783234" 
+                         alt="Baker" style="margin-top:-44px;">
+                    <div style="margin-top: 20px;">
+                        <div style="margin: 20px 0;">
+                            <p style="color: #D93400; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 15px;">Follow Us</p>
+                            <a href="#" style="text-decoration: none; display: inline-block; margin: 0 10px;">
+                                <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Facebook.png?v=1739783242" alt="Facebook" style="width: 24px; height: 24px;">
+                            </a>
+                            <a href="#" style="text-decoration: none; display: inline-block; margin: 0 10px;">
+                                <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Instagram.png?v=1739783238" alt="Instagram" style="width: 24px; height: 24px;">
+                            </a>
+                </div>
+                        <p style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; margin: 20px 0; color: #121211;">
+                            <strong style="color: #121211;">Junior's Restaurant & Cheesecake</strong><br>
+                            386 Flatbush Avenue EXT, Brooklyn, NY 11201, USA, 718852257
+                        </p>
+                        <div style="margin-top: 10px;">
+                            <a href="#" style="color: #000000; text-decoration: underline; font-size: 12px; margin-right: 10px;">Unsubscribe</a>
+                            <a href="#" style="color: #000000; text-decoration: underline; font-size: 12px;">Manage Preferences</a>
+                </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>
