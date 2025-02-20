@@ -14,6 +14,10 @@
             font-family: 'Helvetica';
             src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Helvetica.ttf?v=1740071155') format('truetype');
         }
+        @font-face {
+            font-family: 'WhitneyCondensed';
+            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/WhitneyCondensed-Book.otf?v=1740072290') format('truetype');
+        }
     </style>
 </head>
 <body style="margin:0; padding:0; background-color:#FBF6EA;">
@@ -36,8 +40,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" style="font-family: 'OC Highway', sans-serif; font-size:22px; font-weight:400; letter-spacing:2%; color:#D93400; padding:10px 0; text-transform:uppercase;">
-                            Order Confirmed!
+                        <td align="center" style="font-family: 'OC Highway', sans-serif; font-size:22px; font-weight:400; letter-spacing:5%; color:#D93400; padding:10px 0; text-transform:uppercase;">
+                            Out For Delivery!
                         </td>
                     </tr>
                 </table>
@@ -45,7 +49,27 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td align="center" style=" ">
-                            <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Group_10125997.png?v=1740067224" width="502" height="97" alt="Order Progress" style="display:block;margin-bottom:80px; border:0;">
+                            <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/order-out-of-delivery.png?v=1740071979" width="502" height="97" alt="Order Progress" style="margin-bottom:80px; display:block; border:0;">
+                        </td>
+                    </tr>
+                </table>
+                <!-- Estimated Delivery Time -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:80px;">
+                    <tr>
+                        <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#D93400; padding-bottom:16px;">
+                            ESTIMATED DELIVERY TIME
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="font-family: Arial, sans-serif; font-size:14px; color:#000000; padding-bottom:24px;">
+                            {{ order.shipped_at | date: "%B %d, %Y" }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <a href="{{ order.order_status_url }}" style="padding:15px 95px ; font-family:  WhitneyCondensed; display:inline-block; background-color:#D93400; color:#FFFFFF; letter-spacing: 4%; font-size:16px; font-weight:bold; text-decoration:none;  border-radius: 6px;">
+                                TRACK YOUR ORDER
+                            </a>
                         </td>
                     </tr>
                 </table>
