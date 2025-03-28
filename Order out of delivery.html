@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Helvetica.ttf?v=1740071155" >
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=700">
     <title>Order Confirmed - Junior's Cheesecakes</title>
     <style>
         @font-face {
-            font-family: 'OC Highway';
-            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/OCHighwayVAR2VF.ttf?v=1740071056') format('truetype');
-          
+            font-family: 'OC Highway-9';
+            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/OCHighwayVAR2-Series9.otf?v=1740074638') format('truetype');
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OC Highway-6';
+            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/OCHighwayVAR2-Series6.otf?v=1740074640') format('truetype');
+            font-display: swap;
         }
         @font-face {
             font-family: 'Helvetica';
             src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Helvetica.ttf?v=1740071155') format('truetype');
+            font-display: swap;
         }
         @font-face {
             font-family: 'WhitneyCondensed';
-            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/WhitneyCondensed-Book.otf?v=1740072290') format('truetype');
+            src: url('https://cdn.shopify.com/s/files/1/0694/7517/2609/files/WhitneyCondensed-Bold.otf?v=1740582679') format('truetype');
+            font-display: swap;
         }
     </style>
 </head>
@@ -33,14 +42,14 @@
         <tr>
             <td style="padding:20px;">
                 <!-- Order Confirmation Block -->
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table width="100%" border="0" cellspacing="0"  cellpadding="0">
                     <tr>
                         <td align="center" style="font-family: Arial, sans-serif; font-size:14px; font-weight:regular; color:#000000; padding-top:40px;">
                             Order: <span style="text-decoration:underline; color:#D93400;">{{ order.order_number }}</span>
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" style="font-family: 'OC Highway', sans-serif; font-size:22px; font-weight:400; letter-spacing:5%; color:#D93400; padding:10px 0; text-transform:uppercase;">
+                        <td align="center" style="font-family: 'OC Highway-9', Arial, sans-serif; font-size:22px; font-weight:400; letter-spacing:5%; color:#D93400; padding:10px 0; text-transform:uppercase;">
                             Out For Delivery!
                         </td>
                     </tr>
@@ -57,17 +66,19 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:80px;">
                     <tr>
                         <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#D93400; padding-bottom:16px;">
-                            ESTIMATED DELIVERY TIME
+                            ESTIMATED DELIVERY TIME:
                         </td>
                     </tr>
-                    <tr>
-                        <td align="center" style="font-family: Arial, sans-serif; font-size:14px; color:#000000; padding-bottom:24px;">
-                            {{ order.shipped_at | date: "%B %d, %Y" }}
-                        </td>
-                    </tr>
+                    <td align="center" style="font-family: Arial, sans-serif; font-size:14px; color:#000000; padding-bottom:24px;">
+                        {% if delivery_promise_branded_shipping_line %}
+{{ delivery_promise_branded_shipping_line }}
+{% else %}
+{{ shipping_method.title }}
+{% endif %}
+                    </td>
                     <tr>
                         <td align="center">
-                            <a href="{{ order.order_status_url }}" style="padding:15px 95px ; font-family:  WhitneyCondensed; display:inline-block; background-color:#D93400; color:#FFFFFF; letter-spacing: 4%; font-size:16px; font-weight:bold; text-decoration:none;  border-radius: 6px;">
+                            <a href="{{ order.order_status_url }}" style="letter-spacing: 1.5px; padding:15px 95px; font-family:  WhitneyCondensed,Helvetica; letter-spacing: 1.5px; display:inline-block; background-color:#D93400; color:#FFFFFF; letter-spacing: 4%; font-size:16px; font-weight:bold; text-decoration:none;  border-radius: 6px;">
                                 TRACK YOUR ORDER
                             </a>
                         </td>
@@ -77,20 +88,20 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 48px;">
                     <!-- Order Items -->
                     <tr>
-                        <td style="font-family: Helvetica, sans-serif; font-size:16px; font-weight:bold; color:#D93400; padding-bottom:20px;">
+                        <td style="font-family: 'Helvetica', Arial, sans-serif; font-size:16px; font-weight:bold; color:#D93400; padding-bottom:20px;">
                             ORDER SUMMARY
                         </td>
                 </tr>
                     <tr>
                         <td style="padding:20px; border-top: 1px solid #C1C2BC; border-left: 1px solid #C1C2BC; border-right: 1px solid #C1C2BC; border-top-left-radius: 8px; border-top-right-radius: 8px;">
                             {% for line_item in order.line_items %}
-                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" margin-bottom: 27px;{% unless forloop.last %} border-bottom:1px solid #E0E0E0; {% endunless %}">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" {% unless forloop.last %}style="margin-bottom: 27px; border-bottom:1px solid #E0E0E0;"{% else %}style="margin-bottom: 27px;"{% endunless %}>
                                 <tr>
                                     <td width="80" valign="top">
                                         <img src="{{ line_item.image | img_url: '80x80', crop: 'center' }}" alt="{{ line_item.title }}" width="80" height="80" style="display:block; margin-bottom: 20px; border:0;">
                                     </td>
                                     <td valign="top" style="padding-left:10px;">
-                                        <div style="font-family: Helvetica, sans-serif; font-size:24px; font-weight:700; letter-spacing:4%; color:#121211; margin:0 0 5px 0;">{{ line_item.title | upcase }}</div>
+                                        <div style="font-family: Helvetica, sans-serif; font-size:16px; font-weight:700; letter-spacing:4%; color:#121211; margin:0 0 5px 0;">{{ line_item.title | replace: '&amp;', '&' | replace: '&#39;', "'" | replace: '&quot;', '"' | upcase }}</div>
                                         <div style="font-family: Arial, sans-serif; font-size:14px; color:#000000;">SKU# {{ line_item.sku }}</div>
                                         <div style="font-family: Arial, sans-serif; font-size:14px; color:#000000;">QTY: {{ line_item.quantity }}</div>
                                     </td>
@@ -160,14 +171,7 @@
                                         {{ order.created_at | date: "%B %d, %Y %I:%M:%S %p %Z" }}
                                     </div>
                                 </tr>
-                                <tr>
-                                    <div style="font-family: Arial, sans-serif; font-size:14px; font-weight:bold; color:#D93400; padding-bottom:8px;">
-                                        DELIVERY DATE
-                                    </div>
-                                    <div align="left" style="font-family: Arial, sans-serif; font-size:14px; color:#121211; padding-bottom:8px;">
-                                        {{ order.delivery_date | date: "%b. %d" }}
-                                    </div>
-                                </tr>
+                               
                             </table>
                             <!-- Addresses -->
                             <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:20px;">
@@ -210,7 +214,7 @@
                                                     <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/unnamed_1.png?v=1740069967" alt="{{ order.transactions[0].payment_details.credit_card_company }}" width="auto" height="32" style="display:block; border:0;">
                                                 </td>
                                                 <td style="vertical-align:middle; font-family: Arial, sans-serif; font-size:14px; color:#000000;">
-                                                    {{ order.transactions[0].payment_details.credit_card_company }} XXXX-{{ order.transactions[0].payment_details.credit_card_number }}
+                                                    {{ order.transactions[0].payment_details.credit_card_company }}{{ order.transactions[0].payment_details.credit_card_number }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -299,12 +303,12 @@
                             <table border="0" cellspacing="0" cellpadding="0" style="margin:0 auto;">
                                 <tr>
                                     <td style="padding:0 10px;">
-                                        <a href="#" style="display:inline-block; text-decoration:none;">
+                                        <a href="http://www.facebook.com/pages/Juniors-Restaurant/157798597584671" style="display:inline-block; text-decoration:none;">
                                             <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Facebook.png?v=1739783242" alt="Facebook" width="auto" height="36" style="display:block; border:0;">
                                         </a>
                                     </td>
                                     <td style="padding:0 10px;">
-                                        <a href="#" style="display:inline-block; text-decoration:none;">
+                                        <a href="https://www.instagram.com/juniorscheesecake/" style="display:inline-block; text-decoration:none;">
                                             <img src="https://cdn.shopify.com/s/files/1/0694/7517/2609/files/Instagram.png?v=1739783238" alt="Instagram" width="auto" height="36" style="display:block; border:0;">
                                         </a>
                                     </td>
@@ -315,7 +319,7 @@
                     <tr>
                         <td align="center" style="font-family: Arial, sans-serif; font-size:14px; padding-top:20px;">
                             <strong>Junior's Restaurant & Cheesecake</strong><br>
-                            386 Flatbush Avenue EXT, Brooklyn, NY 11201, USA, 718852257
+                            386 Flatbush Avenue EXT, Brooklyn, NY 11201, USA, 7188525257
                         </td>
                     </tr>
                     <tr>
